@@ -1,6 +1,7 @@
 """Virtual Try-On Dataset"""
 
 import os
+import numpy as np
 import torch
 from torch.utils.data import Dataset
 from PIL import Image
@@ -134,6 +135,3 @@ class VirtualTryOnDataset(Dataset):
             "person_path": str(self.person_images[actual_idx]),
             "garment_path": str(self.garment_images[garment_idx]),
         }
-
-
-import numpy as np
