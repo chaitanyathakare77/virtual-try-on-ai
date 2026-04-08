@@ -71,7 +71,7 @@ class Generator(nn.Module):
 class Discriminator(nn.Module):
     """Discriminator Network for Virtual Try-On"""
     
-    def __init__(self, in_channels: int = 3):
+    def __init__(self, in_channels: int = 9):
         super().__init__()
         
         self.model = nn.Sequential(
@@ -93,7 +93,7 @@ class Discriminator(nn.Module):
         return self.model(x)
 
 
-class GANVirtualTryOn:
+class GANVirtualTryOn(nn.Module):
     """GAN-based Virtual Try-On Model"""
     
     def __init__(
@@ -108,9 +108,10 @@ class GANVirtualTryOn:
             device: Device to load model on
             checkpoint_path: Path to pretrained weights
         """
+        super().__init__()
         self.device = device
-        self.generator = Generator(in_channels=6, out_channels=3).to(device)
-        self.discriminator = Discriminator(in_channels=3).to(device)
+        self.generator = Generator(in_channels=6, out_channels=3)
+        self.discriminator = Discriminator(in_channels=9)
         
         if checkpoint_path:
             self.load_checkpoint(checkpoint_path)
