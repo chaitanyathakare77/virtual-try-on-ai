@@ -83,7 +83,7 @@ class VirtualTryOnDataset(Dataset):
             return A.Compose([
                 A.Resize(self.image_size, self.image_size),
                 A.RandomBrightnessContrast(p=0.2),
-                A.GaussBlur(p=0.1),
+                A.GlassBlur(p=0.1),
                 A.HorizontalFlip(p=0.5),
                 A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
                 ToTensorV2(),
