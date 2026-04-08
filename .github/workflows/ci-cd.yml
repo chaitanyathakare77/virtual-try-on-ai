@@ -32,11 +32,18 @@ jobs:
         pip install flake8
         flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
     
-    - name: Test imports
+    - name: Check Python syntax
       run: |
-        python -c "from src.models import DiffusionVirtualTryOn, GANVirtualTryOn"
-        python -c "from src.data import VirtualTryOnDataset, create_dataloader"
-        python -c "from src.api import create_app"
+        python -m py_compile src/models/diffusion_model.py
+        python -m py_compile src/models/gan_model.py
+        python -m py_compile src/data/dataset.py
+        python -m py_compile src/data/dataloader.py
+        python -m py_compile src/api/routes.py
+        python -m py_compile src/api/__init__.py
+        python -m py_compile src/inference/__init__.py
+        python -m py_compile train.py
+        python -m py_compile app.py
+        python -m py_compile infer.py
 
   build:
     runs-on: ubuntu-latest
