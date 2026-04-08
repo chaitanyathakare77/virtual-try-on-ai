@@ -1,0 +1,81 @@
+# Virtual Try-On AI Configuration
+
+# Model Configuration
+model:
+  name: "diffusion-virtual-tryon"
+  model_type: "diffusion"  # diffusion or gan
+  pretrained_model_name_or_path: "runwayml/stable-diffusion-v1-5"
+  image_size: 512
+  num_inference_steps: 50
+  guidance_scale: 7.5
+
+# Dataset Configuration
+dataset:
+  name: "virtual-tryon-dataset"
+  data_root: "./datasets/raw"
+  output_root: "./datasets/processed"
+  image_size: 512
+  num_workers: 4
+  train_split: 0.85
+  val_split: 0.1
+  test_split: 0.05
+
+# Training Configuration
+training:
+  num_epochs: 100
+  batch_size: 4
+  learning_rate: 1e-4
+  weight_decay: 1e-5
+  warmup_steps: 500
+  num_train_samples: 43000
+  gradient_accumulation_steps: 4
+  mixed_precision: "fp16"
+  seed: 42
+  checkpointing_steps: 500
+  validation_steps: 100
+
+# Optimizer Configuration
+optimizer:
+  type: "AdamW"
+  betas: [0.9, 0.999]
+  eps: 1e-8
+
+# Augmentation Configuration
+augmentation:
+  enable: true
+  random_flip: true
+  color_jitter_prob: 0.3
+  gaussian_blur_prob: 0.2
+  rotation_range: 15
+  scale_range: [0.8, 1.2]
+
+# Inference Configuration
+inference:
+  num_inference_steps: 50
+  guidance_scale: 7.5
+  eta: 0.0
+  use_scheduler: true
+
+# Hardware Configuration
+hardware:
+  device: "cuda"
+  num_gpus: 1
+  distributed: false
+  pin_memory: true
+  non_blocking: true
+
+# Logging Configuration
+logging:
+  log_dir: "./logs"
+  tensorboard_dir: "./runs"
+  log_frequency: 100
+  save_frequency: 500
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  workers: 1
+  max_upload_size: 50  # MB
+  timeout: 300  # seconds
